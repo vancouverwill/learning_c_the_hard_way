@@ -32,29 +32,17 @@ void push(struct Stack *stack, char *varchar)
 
 
     stack->first = newNode;
-    /*
-    if (stack->root) {
-
-    struct Node *currentNode = stack->root;
-
-    while (currentNode->next) {
-        currentNode = currentNode->next;
-    }
-
-    currentNode->next = newNode;
-    } else {
-        stack->root = newNode;
-    }*/
 }
 
-void pop(struct Stack *stack)
+char *pop(struct Stack *stack)
 {
   char *firstItem = stack->first->varchar;
   struct Node *firstNode = stack->first;
   stack->first = stack->first->next;
   free(firstNode);
+  stack->size--;
 
-  printf("%s\n", firstItem);
+  return firstItem;
 }
 
 void stack_close(struct Stack *stack)
@@ -64,10 +52,11 @@ void stack_close(struct Stack *stack)
             struct Node *currentNode = stack->first;
             while(currentNode->next){
                 struct Node *nextNode = currentNode->next;
-                free(currentNode);
+                struct Node *oldNode = currentNode;
                 currentNode = nextNode;
+                free(oldNode);
             }
-            free(stack->first);
+            //free(stack->first);
         }
         //if (stack->size) free(stack->size);
         free(stack);
@@ -82,10 +71,14 @@ int main(int argc, char *argv[])
     push(stack, "james");
     push(stack, "jim");
     push(stack, "jake");
+    push(stack, "jill");
+    push(stack, "trump");
+    push(stack, "mike");
+    push(stack, "matt");
   
-    pop(stack);
-    pop(stack);
-    pop(stack);
+    printf("%s\n", pop(stack));
+    printf("%s\n", pop(stack));
+    
 
     stack_close(stack);
     return 0;

@@ -12,13 +12,6 @@ void print_arguments(int argc, char *argv[])
     
     handle_arguments(argc, argv);
     
-    /*int i = 0;
-
-    for(i = 0; i < argc; i++) {
-        print_letters(argv[i]);
-        printf("use pointers to access array \n");
-        print_letters(*(argv+i));
-    }*/
 }
 
 
