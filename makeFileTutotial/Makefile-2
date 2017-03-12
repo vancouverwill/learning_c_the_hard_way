@@ -1,7 +1,7 @@
 all: hello
 
 hello: main.o factorial.o hello.o
-	g++ main.o factorial.o hello.o -o hello
+	g++ main.o factorial.o hello.o isNumber.o -o hello
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -11,6 +11,9 @@ factorial.o: factorial.cpp
 
 hello.o: hello.cpp
 	g++ -c hello.cpp
+
+isNumber: isNumber.cpp
+	g++ -c isNumber.cpp
 
 clean:
 	rm *o hello

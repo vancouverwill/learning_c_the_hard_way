@@ -11,6 +11,13 @@ int main(int argc, char *argv[]){
         std::cout << std::endl;
         return 0;
     }
+    if (isNumber(argv[1]) == false) {
+        std::cout << std::endl;
+        printf("input must be an integer"); 
+        std::cout << std::endl;
+        std::cout << std::endl;
+        return 0;
+    }
     print_hello();
     std::cout << std::endl;
     std::cout << "The factorial of " << argv[1] << " is " << factorial(atoi(argv[1])) << std::endl;
