@@ -1,5 +1,3 @@
-#define NDEBUG
-
 #ifndef __dbg_h__
 #define __dbg_h__
 
@@ -18,24 +16,18 @@
 
 #define log_err(M, ...) fprintf(stderr,\
                 "[ERROR] (%s:%d: errno: %s) " M "\n", __FILE__, __LINE__,\
-                clean_errno(), ##__VA_ARGS__)
+                        clean_errno(), ##__VA_ARGS__)
 
 #define log_warn(M, ...) fprintf(stderr,\
                 "[WARN] (%s:%d: errno: %s) " M "\n",\
-                __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
+                        __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
 
 #define log_info(M, ...) fprintf(stderr, "[INFO] (%s:%d) " M "\n",\
                 __FILE__, __LINE__, ##__VA_ARGS__)
 
-
-/**
-* check if condition A is true and if not log the error
-***/
 #define check(A, M, ...) if(!(A)) {\
         log_err(M, ##__VA_ARGS__); errno=0; goto error; }
 
-// sentinel should be put in places which should never be reached or shouldn't happen
-// to log them
 #define sentinel(M, ...)  { log_err(M, ##__VA_ARGS__);\
         errno=0; goto error; }
 

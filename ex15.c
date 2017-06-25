@@ -7,6 +7,8 @@ void print_names_and_ages(int ages[], char *names[], int ages_count) {
     printf("--- print_names_and_ages() count:%d\n", ages_count);
 
     // first way using indexing
+    printf("first way using indexing");
+            
     for (i = 0; i < ages_count; i++) {
         printf("ARRAYS %s has %d years alive.\n",
                 names[i], 
