@@ -7,6 +7,8 @@
 # Unignore all dirs
 !*/
 
+# !Makefile
+
 # Object files
 *.o
 *.ko
