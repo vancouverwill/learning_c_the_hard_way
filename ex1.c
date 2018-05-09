@@ -2,10 +2,10 @@
 
 int main(int argc, char *argv[])
 {
-	puts("Hello World");
-	puts("Hello World 2");
+	int distance = 100;
 
-	puts("Hello World 3");
-	
+	// this is also a comment
+	printf("You are %d miles away.\n", distance);
+
 	return 0;
 }
