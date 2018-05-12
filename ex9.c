@@ -55,6 +55,9 @@ int main(int argc, char *argv[])
             another[0], another[1],
             another[2], another[3]);
 
+    printf("another as ints each: %d %d %d %d\n",
+            another[0], another[1],
+            another[2], another[3]);
     return 0;
 }
 
