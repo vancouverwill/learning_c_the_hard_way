@@ -25,6 +25,9 @@ struct Person *Person_create(char *name, int age, int height, int weight)
 
 void Person_destroy(struct Person *who)
 {
+	if (who == NULL) {
+		printf("who is NULL!");
+	}
     assert(who != NULL);
 
     free(who->name);
@@ -39,21 +42,38 @@ void Person_print(struct Person *who)
     printf("\tWeight: %d\n", who->weight);
 }
 
-int main(int argc, char *argv[])
+struct Animal {
+	char *name;
+	int age;
+	int height;
+	int weight;  
+};
+
+// passed not as a pointer
+void Animal_print(struct Animal who)
 {
-    struct Animal {
-        char *name;
-        int age;
-        int height;
-        int weight;  
-    };
+    printf("Name: %s\n", who.name);
+    printf("\tAge: %d\n", who.age);
+    printf("\tHeight: %d\n", who.height);
+    printf("\tWeight: %d\n", who.weight);
+}
+
+
+void createStructOnStack()
+{
 
     struct Animal fido;
-    fido.name = "bill";
+    fido.name = "Mickey";
+    fido.weight = 10;
 
     printf("stack struct example %s . \n", fido.name);
+	Animal_print(fido);
+}
 
-    // make two people structures
+int main(int argc, char *argv[])
+{
+	createStructOnStack();
+
     struct Person *joe = Person_create(
             "Joe Alex", 32, 64, 140);
 
@@ -66,7 +86,9 @@ int main(int argc, char *argv[])
 
     printf("Frank is at memory locatino %p:\n", frank);
     Person_print(frank);
-    Person_print(NULL);
+
+	// we can not do the below as it will create a segmentation fault	
+	//    Person_print(NULL);
 
     // make everyone age 20 years and print them again
     joe->age +=20;
@@ -81,7 +103,6 @@ int main(int argc, char *argv[])
     //destroy them both so we clean up
     Person_destroy(joe);
     Person_destroy(frank);
-    //Person_destroy(NULL);
 
     return 0;
 }

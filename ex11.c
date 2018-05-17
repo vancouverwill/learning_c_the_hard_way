@@ -2,39 +2,62 @@
 
 int main(int argc, char *argv[])
 {
-    // go through each string in argv
-    
-    int i = 0;
-    while(i < argc) {
-        printf("arg %d in order: %s\n", i, argv[i]);
-        i++;
-    }
+    int numbers[4] = {'e'};
+    char name[4] = {'a','a','a'};
 
-    i = argc - 1;
-    while(i >= 0) {
-        printf("arg %d in reverse order: %s\n", i, argv[i]);
-        i--;
-    }
+    name[3] = '\0';
 
-    //let's make our own aray of strings
+    // first, print them out raw
+    printf("numbers: %d %d %d %d\n",
+            numbers[0], numbers[1],
+            numbers[2], numbers[3]);
 
-    char *states[] = {
-        "California", "Oregon", "Washington", "Texas", NULL
-    };
+    printf("name each: %c %c %c %c\n",
+            name[0], name[1],
+            name[2], name[3]);
 
-    int num_states = 5;
-    i = 0;
-    while(i < num_states) {
-        printf("state %d: %s\n", i, states[i]);
-        i++;
-    }
-    
-    i = 0;
-    while(i < argc) {
-        states[i] = argv[i];
-        printf("states taken from args %d: %s\n", i, states[i]);
-        i++;
-    }
+    printf("name : %s\n", name);
 
+    //setup the numbers
+    numbers[0] = 1;
+    numbers[1] = 'e';
+    numbers[2] = 'g';
+    numbers[3] = 4;
+
+    // setup the name
+    name[0] = 100;
+    name[1] = 'e';
+    name[2] = 'd';
+    name[3] = '\0';
+
+    // then print them out intialized
+    printf("numbers: %d %d %d %d\n",
+            numbers[0], numbers[1],
+            numbers[2], numbers[3]);
+
+    printf("name each: %c %c %c %c\n",
+            name[0], name[1],
+            name[2], name[3]);
+
+    printf("name as ints each: %d %d %d %d\n",
+            name[0], name[1],
+            name[2], name[3]);
+
+    //print the name like a string
+    printf("name : %s\n", name);
+
+    //another way to use name
+    char *another = "Zed";
+
+    printf("another: %s\n", another);
+
+    printf("another each: %c %c %c %c\n",
+            another[0], another[1],
+            another[2], another[3]);
+
+    printf("another as ints each: %d %d %d %d\n",
+            another[0], another[1],
+            another[2], another[3]);
     return 0;
 }
+

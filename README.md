@@ -34,4 +34,12 @@ $ run
 
 Then you can use c, n and s to continue, next and step through the program
 
+## Memory Allocation
 
+## Heap
+
+Permanent locations in the system memory which need to be allocated with `malloc` and deallocated with `free`, all of the rest of the system memory is potentially accesible by this.
+
+## Stack
+
+Is of a certain size and is used by temporary variables which are created within the scope of a function.

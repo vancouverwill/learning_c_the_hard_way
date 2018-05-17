@@ -21,7 +21,7 @@ void handle_arguments(int count, char *command_line_args[])
 
     for(i = 0; i < count; i++) {
         print_letters(command_line_args[i]);
-        printf("use pointers to access array \n");
+        printf("\n\nuse pointers to access array \n");
         print_letters(*(command_line_args+i));
         printf("\n");
         printf("\n");
@@ -31,6 +31,7 @@ void print_letters(char arg[])
 {
     int i = 0;
 
+	printf("loop until hitting code zero character\n");
     for(i = 0; arg[i] != '\0'; i++) {
         char ch = arg[i];
 
@@ -39,7 +40,7 @@ void print_letters(char arg[])
         }
     }
 
-    printf("\n");
+    printf("\nloop until hitting end of length of string\n");
 
     for (i = 0; i < strlen(arg); i++) {
         char ch = arg[i];

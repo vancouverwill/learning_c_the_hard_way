@@ -4,10 +4,10 @@
 void print_names_and_ages(int ages[], char *names[], int ages_count) {
     int i = 0;
    
-    printf("--- print_names_and_ages() count:%d\n", ages_count);
+    printf("\n\n--- print_names_and_ages() count:%d\n", ages_count);
 
     // first way using indexing
-    printf("first way using indexing");
+    printf("first way using indexing\n\n");
             
     for (i = 0; i < ages_count; i++) {
         printf("ARRAYS %s has %d years alive.\n",
@@ -15,15 +15,19 @@ void print_names_and_ages(int ages[], char *names[], int ages_count) {
                 ages[i]);
         printf("POINTERS %s:%i has %d years alive.\n",
                 *(names+i), **(names+i), *(ages+i));
-        printf("ADDRESSES %p has %d years alive.\n",
-                &names[i], ages[i]);
+        printf("ADDRESSES names:%p AGES:%p\n",
+                &names[i], &ages[i]);
+        printf("POINTER OF ADDRESSES names:%s AGES:%d\n",
+                *&names[i], *&ages[i]);
     }
     printf("---\n");
 }
 
 
 void print_names_and_ages_with_pointers(int ages[], char *names[], int ages_count) {
-    //setup the pointers to the start of the arrays
+    printf("print_names_and_ages_with_pointers\n");
+	
+	//setup the pointers to the start of the arrays
     int i;
     int *cur_age = ages;
     char **cur_name = names;
@@ -46,7 +50,8 @@ void print_names_and_ages_with_pointers(int ages[], char *names[], int ages_coun
 
 
 void print_names_and_ages_with_pointers_used_as_arrays(int ages[], char *names[], int ages_count) {
-    //third way, pointers are just arrays
+    printf("print_names_and_ages_with_pointers_used_as_arrays\n");
+	//third way, pointers are just arrays
     int i;
     int *cur_age = ages;
     char **cur_name = names;
@@ -61,6 +66,7 @@ void print_names_and_ages_with_pointers_used_as_arrays(int ages[], char *names[]
 
 
 void print_names_and_ages_with_pointers_used_in_stupid_complex_way(int ages[], char *names[], int ages_count) {
+	printf("print_names_and_ages_with_pointers_used_in_stupid_complex_way\n");
     // fourth way with pointers in a stupid complex way
     int *cur_age = ages;
     char **cur_name = names;
@@ -105,11 +111,11 @@ int main(int argc, char *argv[])
 
     print_names_and_ages(ages, names, count);
     
-    print_names_and_ages_with_pointers(ages, names, count);
+    //print_names_and_ages_with_pointers(ages, names, count);
     
-    print_names_and_ages_with_pointers_used_as_arrays(ages, names, count);
+    //print_names_and_ages_with_pointers_used_as_arrays(ages, names, count);
     
-    print_names_and_ages_with_pointers_used_in_stupid_complex_way(ages, names, count);
+    //print_names_and_ages_with_pointers_used_in_stupid_complex_way(ages, names, count);
     
     
     //cur_age = (int)&names;
