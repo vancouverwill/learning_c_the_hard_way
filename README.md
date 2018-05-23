@@ -1,6 +1,8 @@
 # learning_c_the_hard_way
 Exercises for the amazing http://c.learncodethehardway.org/book/
 
+Original code at `https://github.com/zedshaw/learn-c-the-hard-way-lectures`
+
 ## Basics
 
 To run a compiled c  binary you just need the path so 
@@ -30,6 +32,10 @@ $ b main
 # run through program
 $ run
 
+```
+or 
+```
+run [args]
 ```
 
 Then you can use c, n and s to continue, next and step through the program
