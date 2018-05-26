@@ -7,7 +7,7 @@
 #define MAX_DATA 512
 #define MAX_ROWS 100
 
-int DEBUG = 1;
+int DEBUG = 0;
 struct Address {
     int id;
     int set;
@@ -192,7 +192,8 @@ int main(int argc, char *argv[])
     struct Connection *conn = Database_open(filename, action);
     int id = 0;
 
-    if(argc < 3) die("USAGE: ex17 <dbfile> <action> [action params]", conn);
+    if(argc < 3)
+		die("USAGE: ex17 <dbfile> <action> [action params]", conn);
     if (argc > 3) id = atoi(argv[3]);
     if (id >= MAX_ROWS) die("There's not that many records.", conn);
 

@@ -17,9 +17,31 @@ To run a compiled c  binary you just need the path so
 make -f MyMakefile
 ```
 
+## Makefiles
+
+In a folder when running make it will look for the default make file name `Makefile`. So in this pproject root you could run 
+
+`make Makefile clean` or `make clean` and they will do the same thing
+
+It seems that one rule `all:` needs to be one line i.e.
+
+```
+all: ex3
+```
+
 ## Debugging
 
-Use `lldb` on OSX or `gdb` on linux. The commands are quite similar. Example with lldb
+The '-g' flag must be passed to make debugging work!
+
+i.e below won't work 
+
+`cc ./ex17.c -o ex17`
+
+it needs to look like
+
+`cc -Wall -g ./ex17.c -o ex17`
+
+Use `lldb` on OSX or `gdb` on linux.The commands are quite similar. Example with lldb
 
 ```
 lldb

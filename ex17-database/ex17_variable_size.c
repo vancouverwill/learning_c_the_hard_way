@@ -48,9 +48,11 @@ void Address_print(struct Address *addr)
             addr->id, addr->name, addr->email);
 }
 
-void Database_load(struct Connection *conn)
+void Database_load(struct Connection *conn, int max_rows)
 {
-    int rc = fread(conn->db, sizeof(struct Database), 1, conn->file);
+	int size = sizeof(int) + sizeof(struct Address) * max_rows;
+    int rc = fread(conn->db, size, 1, conn->file);
+    //int rc = fread(conn->db, sizeof(struct Database), 1, conn->file);
     if (rc != 1) die("Failed to load database.", conn);
 }
 
@@ -63,6 +65,7 @@ struct Connection *Database_open(const char *filename, char mode, int max_rows)
 
     conn->db = malloc(sizeof(int) + sizeof(struct Address) * max_rows);
     //conn->db = malloc(sizeof(struct Database));
+	conn->db->max_rows = max_rows;
     if(!conn->db) die("Memory error", conn);
 
     if(mode == 'c') {
@@ -71,7 +74,7 @@ struct Connection *Database_open(const char *filename, char mode, int max_rows)
         conn->file = fopen(filename, "r+");
 
         if(conn->file) {
-            Database_load(conn);
+            Database_load(conn, max_rows);
         }
     }
 
@@ -95,11 +98,12 @@ void Database_close(struct Connection *conn)
 	}
 }
 
-void Database_write(struct Connection *conn)
+void Database_write(struct Connection *conn, int max_rows)
 {
     rewind(conn->file);
-
-    int rc = fwrite(conn->db, sizeof(struct Database), 1, conn->file);
+	int size = sizeof(int) + sizeof(struct Address) * max_rows;
+    int rc = fwrite(conn->db, size, 1, conn->file);
+    //int rc = fwrite(conn->db, sizeof(struct Database), 1, conn->file);
     if(rc != 1) die("Failed to write database.", conn);
 
     rc = fflush(conn->file);
@@ -190,7 +194,7 @@ int main(int argc, char *argv[])
     char action = argv[2][0];
 	printf("file:%s  mode:%c\n\n",filename, action);
     //struct Connection *conn = Database_open(filename, action, MAX_ROWS);
-    struct Connection *conn = Database_open(filename, action);
+    struct Connection *conn = Database_open(filename, action, max_rows);
     int id = 0;
 
     if(argc < 3)
@@ -202,7 +206,7 @@ int main(int argc, char *argv[])
         case 'c':
             Database_create(conn, max_rows);
             //Database_create(conn);
-            Database_write(conn);
+            Database_write(conn, max_rows);
             break;
 
         case 'g':
@@ -215,14 +219,14 @@ int main(int argc, char *argv[])
             if(argc != 6) die("Need id, name, email to set", conn);
 
             Database_set(conn, id, argv[4], argv[5]);
-            Database_write(conn);
+            Database_write(conn, max_rows);
             break;
 
         case 'd':
             if(argc != 4) die("Need id to delete", conn);
 
             Database_delete(conn, id);
-            Database_write(conn);
+            Database_write(conn, max_rows);
             break;
 
         case 'l':

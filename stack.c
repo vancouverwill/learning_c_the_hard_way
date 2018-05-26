@@ -69,13 +69,13 @@ int main(int argc, char *argv[])
     
     push(stack, "wiliam");
     push(stack, "james");
-    push(stack, "jim");
+/*    push(stack, "jim");
     push(stack, "jake");
     push(stack, "jill");
     push(stack, "trump");
     push(stack, "mike");
     push(stack, "matt");
-  
+  */
     printf("%s\n", pop(stack));
     printf("%s\n", pop(stack));
     
