@@ -60,7 +60,11 @@ or
 run [args]
 ```
 
-Then you can use c, n and s to continue, next and step through the program
+Then you can use c (continue), n (next) and s (step into) to continue, next and step through the program
+
+You can also print out individual vars like
+
+`print temp`
 
 ## Memory Allocation
 

@@ -11,8 +11,6 @@ int DEBUG = 0;
 struct Address {
     int id;
     int set;
-   // char *name;
-   // char *email;
     char name[MAX_DATA];
     char email[MAX_DATA];
 };
@@ -54,7 +52,7 @@ void Database_load(struct Connection *conn)
 	int rca = fread(&rows, sizeof(int), 1, conn->file);
     if (rca != 1) die("Failed to load database size.", conn);
 	printf("rows:%d", rows);
-    conn->db = malloc(sizeof(int) + sizeof(struct Address) * rows);
+    conn->db = malloc(Database_size(rows));
     if(!conn->db) die("Memory error with database", conn);
 	
 	/* Seek to the beginning of the file */
@@ -68,10 +66,8 @@ struct Connection *Database_open(const char *filename, char mode, int max_rows)
     struct Connection *conn = malloc(sizeof(struct Connection));
     if (!conn) die("Memory error with connection", conn);
 
-    //conn->db = malloc(sizeof(struct Database));
-
     if(mode == 'c') {
-    	conn->db = malloc(sizeof(int) + sizeof(struct Address) * max_rows);
+    	conn->db = malloc(Database_size(max_rows));
 		conn->db->max_rows = max_rows;
     	if(!conn->db) die("Memory error with database", conn);
         conn->file = fopen(filename, "w");
