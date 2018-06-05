@@ -1,10 +1,12 @@
-#include <stdio.h>
 #include "ex22.h"
 #include "dbg.h"
+#include <stdio.h>
 
-int THE_SIZE =1000;
+int THE_SIZE = 1000;
 
-static int THE_AGE = 37;
+ const static int THE_AGE = 37;
+
+ static int THE_AGE_STATIC = THE_AGE;
 
 /*int get_age(struct State *state)
 {
@@ -17,25 +19,25 @@ void set_age(struct State *state, int age)
 }*/
 int get_age()
 {
-        return THE_AGE;
+    return THE_AGE_STATIC;
 }
 
 void set_age(int age)
 {
-       THE_AGE = age; 
+    THE_AGE_STATIC = age;
 }
 
 double update_ratio(double new_ratio)
 {
-        static double ratio = 1.0;
+    static double ratio = 1.0;
 
-            double old_ratio = ratio;
-                ratio = new_ratio;
+    double old_ratio = ratio;
+    ratio = new_ratio;
 
-                    return old_ratio;
+    return old_ratio;
 }
 
 void print_size()
 {
-        log_info("I think size is: %d", THE_SIZE);
+    log_info("I think size is: %d", THE_SIZE);
 }

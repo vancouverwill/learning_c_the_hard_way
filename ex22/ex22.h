@@ -7,7 +7,8 @@ struct State {
 };
 */
 
-extern int THE_SIZE;
+//extern int THE_SIZE;
+int THE_SIZE;
 
 // gets and sets an internal static variable in ex22.c
 // int get_age(struct State *state);

@@ -1,5 +1,7 @@
 CFLAGS=-Wall -g -DBDEBUG
 
+all: ex22.o ex22_main
+
 ex22.o: ./ex22.c
 
 ex22_main: ./ex22_main.c ./ex22.o
@@ -10,3 +12,6 @@ combine: ex22.o ex22_main
 echo:
 	@echo	./ex22.c -o ./ex22.0 	
 	@echo	ex22_main.c ex22.o -o ex22m_main
+
+clean:
+	rm ex22.o ex22_main

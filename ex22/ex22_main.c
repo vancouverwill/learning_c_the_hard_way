@@ -22,6 +22,8 @@ void scope_demo(int count)
 
 int main(int argc, char *argv[])
 {
+
+		//printf("ration %d", ratio);
         // test out THE_AGE accessors
         log_info("My name: %s, age: %d", MY_NAME, get_age());
 
