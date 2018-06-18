@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include "dbg.h"
 
-#define MAX_DATA 100
+#define MAX_DATA 10
 
 int read_string(char **out_string, int max_buffer)
 {
@@ -93,8 +93,67 @@ error:
     return -1;
 }
 
+int print_scan(const char *fmt, ...)
+{
+    int i = 0;
+    int rc = 0;
+    int *in_int = NULL;
+    char *in_char = NULL;
+    char **in_string = NULL;
+
+    va_list argp;
+    va_start(argp, fmt);
+
+    for (i = 0; fmt[i] != '\0'; i++) {
+        if (fmt[i] != '%') {
+			printf("%c", fmt[i]);
+			continue;
+		}
+		i++;
+		switch (fmt[i]) {
+			case '\0':
+				sentinel("Invalid format, you ended with %%.");
+				break;
+
+			case 'd':
+				in_int = va_arg(argp, int *);
+				printf("%d", in_int);
+				break;
+
+			case 'c':
+				in_char = va_arg(argp, char *);
+				printf("%c", in_char);
+				break;
+
+			case 's':
+				in_string = va_arg(argp, char **);
+				printf("%s", in_string);
+				break;
+
+			default:
+				sentinel("Invalid format.");
+		}
+	}
+         
+    va_end(argp);
+    return 0;
+
+error:
+    va_end(argp);
+    return -1;
+
+
+}
+
+	
 int main(int argc, char *argv[])
 {
+	print_scan("test no params!\n");
+	print_scan("test number!:%d\n", 10);
+	print_scan("test char!:%c\n", 'c');
+	print_scan("test string!:%s\n", "some random string");
+	return -1;
+	// clear below while testing print_scan()
     char *first_name = NULL;
     char initial = ' ';
     char *last_name = NULL;
@@ -102,7 +161,9 @@ int main(int argc, char *argv[])
 
     printf("What's your first name? ");
     int rc = read_scan("%s", MAX_DATA, &first_name);
-    check(rc == 0, "Failed first name.");
+    debug("rc:%d", rc);
+	check(rc == 0, "Failed first name.");
+
 
     printf("What's your initial? ");
     rc = read_scan("%c\n", &initial);
