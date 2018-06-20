@@ -29,8 +29,9 @@ void die(const char *message)
 int main(int argc, char *argv[])
 {
 
-	char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
- 	char* singleSearchWord = "php";
+	//char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
+	char* singleFileName = "wifi.log";
+ 	char* singleSearchWord = "process";
 	printf("fileName:%s\n", singleFileName);
 
 	for (int i = 0; i < argc; i++) {
@@ -42,10 +43,15 @@ int main(int argc, char *argv[])
     if (file == NULL) die("Failed to load file.");
 	char line [ 128 ]; /* or other suitable maximum line size */
 	int lines = 0;
+	int matches = 0;
 	while ( fgets ( line, sizeof line, file ) != NULL ) {
 		lines++;
-		printf("%s\n", line);
+		if (strstr(line, singleSearchWord) != NULL) {
+			printf("%d:%s\n", lines, line);
+			matches++;
+		}
 	}
 	printf("total lines:%d\n", lines);
+	printf("total matches:%d\n", matches);
     fclose(file);
 }
