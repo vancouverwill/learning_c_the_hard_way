@@ -4,6 +4,10 @@
 #include "dbg.h"
 
 
+//#define NDEBUG
+char* RED="\033[0;31m";
+char* NC="\033[0m";  // No Color
+
 /**
   * to run `./ex26 searchWord searchWord2`
   MVP
@@ -31,7 +35,13 @@ int main(int argc, char *argv[])
 
 	char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
  	char* singleSearchWord = "php";
-	printf("fileName:%s\n", singleFileName);
+	char* singleSearchWordWithWarning;
+	asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, singleSearchWord, NC);
+	/*printf("fileName:%s\n", singleFileNam);*/
+	/*strncpy(singleSearchWordWithWarning, RED, strlen(RED));*/
+	/*strncpy(singleSearchWordWithWarning, singleSearchWord, strlen(singleSearchWord));*/
+	/*strcpy(singleSearchWordWithWarning, NC);*/
+	printf("\nwarning:%s:\n", singleSearchWordWithWarning);
 
 	for (int i = 0; i < argc; i++) {
 		printf("%d:%s\n", i, argv[i]);
@@ -44,8 +54,19 @@ int main(int argc, char *argv[])
 	int lines = 0;
 	while ( fgets ( line, sizeof line, file ) != NULL ) {
 		lines++;
-		printf("%s\n", line);
+		#ifdef NDEBUG
+			printf("%s\n", line);
+		#endif
+		char * pch;
+	    pch = strstr(line, singleSearchWord);
+		if (pch) {
+			strncpy(pch, singleSearchWordWithWarning, strlen(singleSearchWordWithWarning)); 
+			printf("%s\n", line);	
+		}
+		if (lines > 4) {
+			break;
+		}
 	}
-	printf("total lines:%d\n", lines);
+	printf("%stotal lines:%s%d\n", RED, NC, lines);
     fclose(file);
 }
