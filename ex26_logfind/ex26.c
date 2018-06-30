@@ -7,7 +7,7 @@
 //#define NDEBUG
 char* RED="\033[0;31m";
 char* NC="\033[0m";  // No Color
-
+int maxLines = -1;
 /**
   * to run `./ex26 searchWord searchWord2`
   MVP
@@ -37,11 +37,8 @@ int main(int argc, char *argv[])
  	char* singleSearchWord = "php";
 	char* singleSearchWordWithWarning;
 	asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, singleSearchWord, NC);
-	/*printf("fileName:%s\n", singleFileNam);*/
-	/*strncpy(singleSearchWordWithWarning, RED, strlen(RED));*/
-	/*strncpy(singleSearchWordWithWarning, singleSearchWord, strlen(singleSearchWord));*/
-	/*strcpy(singleSearchWordWithWarning, NC);*/
 	printf("\nwarning:%s:\n", singleSearchWordWithWarning);
+	/*printf("fileName:%s\n", singleFileName);*/
 
 	for (int i = 0; i < argc; i++) {
 		printf("%d:%s\n", i, argv[i]);
@@ -52,6 +49,7 @@ int main(int argc, char *argv[])
     if (file == NULL) die("Failed to load file.");
 	char line [ 128 ]; /* or other suitable maximum line size */
 	int lines = 0;
+	int matches = 0;
 	while ( fgets ( line, sizeof line, file ) != NULL ) {
 		lines++;
 		#ifdef NDEBUG
@@ -60,13 +58,15 @@ int main(int argc, char *argv[])
 		char * pch;
 	    pch = strstr(line, singleSearchWord);
 		if (pch) {
+			matches++;
 			strncpy(pch, singleSearchWordWithWarning, strlen(singleSearchWordWithWarning)); 
 			printf("%s\n", line);	
 		}
-		if (lines > 4) {
+		if (maxLines != -1 && lines > maxLines) {
 			break;
 		}
 	}
 	printf("%stotal lines:%s%d\n", RED, NC, lines);
+	printf("total matches:%d\n", matches);
     fclose(file);
 }

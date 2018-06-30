@@ -101,8 +101,7 @@ int is_valid_copy(char* data, int count, char expects)
 
 int main(int argc, char* argv[])
 {
-    /*const int size = 1005;*/
-    const int size = 105;
+    const int size = 1005;
     char from[size] = { 'a' };
     char to[size] = { 'c' };
     int rc = 0;
