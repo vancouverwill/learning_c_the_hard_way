@@ -9,7 +9,15 @@ char* RED="\033[0;31m";
 char* NC="\033[0m";  // No Color
 int maxLines = -1;
 /**
-  * to run `./ex26 searchWord searchWord2`
+  * to run `./ex26 searchWord searchWord2` 
+IMPORTANT: special characters such as # need to put quotes around the string
+
+  Requriments
+  * [x] default search for lines which contain ALL search params, order irrelevant
+  * [x] can do OR search when -o is passed as first arg
+  * [] loads log files from `./.logfind`
+
+
   MVP
   
   * attempt with single file
@@ -39,14 +47,24 @@ char* get_colored_search_word(char* needle)
 
 int main(int argc, char *argv[])
 {
+	int indexStartingSearchWord = 1;
+	int searchAll = 1;
+	debug("main begin:%s", argv[1]);
+
+	if (strncmp(argv[1],"-o", 2) == 0) {
+		debug("setting up OR");
+		searchAll = 0;
+		printf("search OR\n");
+		indexStartingSearchWord = 2;
+	} else {
+		debug("setting up ALL");
+		printf("search ALL\n");
+	} 
+	debug("have set search type");
 
 	char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
- //	char* singleSearchWord = "php";
-	/*char* singleSearchWordWithWarning;*/
-	/*asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, singleSearchWord, NC);*/
-//	printf("\nwarning:%s:\n", get_colored_search_word(singleSearchWord));
 
-	for (int i = 0; i < argc; i++) {
+	for (int i = indexStartingSearchWord; i < argc; i++) {
 		printf("%d:%s\n", i, argv[i]);
 	}
     FILE* file = NULL;
@@ -63,16 +81,19 @@ int main(int argc, char *argv[])
 		#endif
 		char * pch;
 		char * needle;
-		for (int i = 0; i < argc; i++) {
+		for (int i = indexStartingSearchWord; i < argc; i++) {
 			needle = argv[i];
 			pch = strstr(line, needle);
 			if (pch) {
-				matches++;
 				matches_per_line++;
 				strncpy(pch, get_colored_search_word(needle), strlen(get_colored_search_word(needle))); 
 			}
 		}
-		if (matches_per_line > 0) {
+		if (searchAll == 0 && matches_per_line > 0) {
+				matches++;
+				printf("%s\n", line);	
+		} else if (matches_per_line >= argc - indexStartingSearchWord) {
+				matches++;
 				printf("%s\n", line);	
 		}
 
