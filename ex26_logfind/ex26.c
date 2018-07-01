@@ -30,43 +30,58 @@ void die(const char *message)
     exit(1);
 }
 
+char* get_colored_search_word(char* needle)
+{
+	char* singleSearchWordWithWarning;
+	asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, needle, NC);
+	return singleSearchWordWithWarning;
+}	
+
 int main(int argc, char *argv[])
 {
 
 	char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
- 	char* singleSearchWord = "php";
-	char* singleSearchWordWithWarning;
-	asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, singleSearchWord, NC);
-	printf("\nwarning:%s:\n", singleSearchWordWithWarning);
-	/*printf("fileName:%s\n", singleFileName);*/
+ //	char* singleSearchWord = "php";
+	/*char* singleSearchWordWithWarning;*/
+	/*asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, singleSearchWord, NC);*/
+//	printf("\nwarning:%s:\n", get_colored_search_word(singleSearchWord));
 
 	for (int i = 0; i < argc; i++) {
 		printf("%d:%s\n", i, argv[i]);
 	}
     FILE* file = NULL;
     file = fopen(singleFileName, "r+");
-	/*int rc = fread(conn->db, sizeof(struct Database), 1, file);*/
     if (file == NULL) die("Failed to load file.");
 	char line [ 128 ]; /* or other suitable maximum line size */
 	int lines = 0;
 	int matches = 0;
+	int matches_per_line = 0;
 	while ( fgets ( line, sizeof line, file ) != NULL ) {
 		lines++;
 		#ifdef NDEBUG
 			printf("%s\n", line);
 		#endif
 		char * pch;
-	    pch = strstr(line, singleSearchWord);
-		if (pch) {
-			matches++;
-			strncpy(pch, singleSearchWordWithWarning, strlen(singleSearchWordWithWarning)); 
-			printf("%s\n", line);	
+		char * needle;
+		for (int i = 0; i < argc; i++) {
+			needle = argv[i];
+			pch = strstr(line, needle);
+			if (pch) {
+				matches++;
+				matches_per_line++;
+				strncpy(pch, get_colored_search_word(needle), strlen(get_colored_search_word(needle))); 
+			}
 		}
+		if (matches_per_line > 0) {
+				printf("%s\n", line);	
+		}
+
 		if (maxLines != -1 && lines > maxLines) {
 			break;
 		}
+		matches_per_line = 0;		
 	}
-	printf("%stotal lines:%s%d\n", RED, NC, lines);
+	printf("total lines:%s%d%s\n", RED, lines, NC);
 	printf("total matches:%d\n", matches);
     fclose(file);
 }
