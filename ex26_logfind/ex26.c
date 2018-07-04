@@ -8,6 +8,7 @@
 char* RED="\033[0;31m";
 char* NC="\033[0m";  // No Color
 int maxLines = -1;
+const int MAX_LINE_SIZE = 128;/* or other suitable maximum line size */
 /**
   * to run `./ex26 searchWord searchWord2` 
 IMPORTANT: special characters such as # need to put quotes around the string
@@ -18,7 +19,7 @@ IMPORTANT: special characters such as # need to put quotes around the string
   * [] loads log files from `./.logfind`
 
 
-  MVP
+  MVP Plan
   
   * attempt with single file
   * Loop over hard coded list of log files and look for single word
@@ -62,6 +63,15 @@ int main(int argc, char *argv[])
 	} 
 	debug("have set search type");
 
+	char* logFileName = "./.logfind";
+    FILE* logFile = NULL;
+    logFile = fopen(logFileName, "r+");
+    if (logFile == NULL) die("Failed to load log directory file.");
+	char fileName [ MAX_LINE_SIZE ]; 
+	while ( fgets ( fileName, sizeof fileName, logFile ) != NULL ) {
+		printf("fileName:%s", fileName);
+	}
+
 	char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
 
 	for (int i = indexStartingSearchWord; i < argc; i++) {
@@ -70,7 +80,7 @@ int main(int argc, char *argv[])
     FILE* file = NULL;
     file = fopen(singleFileName, "r+");
     if (file == NULL) die("Failed to load file.");
-	char line [ 128 ]; /* or other suitable maximum line size */
+	char line [ MAX_LINE_SIZE ];
 	int lines = 0;
 	int matches = 0;
 	int matches_per_line = 0;
