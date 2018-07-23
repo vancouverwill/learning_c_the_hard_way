@@ -16,4 +16,4 @@ do
     fi
 done
 
-echo "" I’ll be using this later
+# echo "" I’ll be using this later
