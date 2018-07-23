@@ -41,5 +41,6 @@ int lowercase(const char *msg, int msg_len)
 
 int fail_on_purpose(const char *msg)
 {
+	printf("failed:%s",msg);
     return 1;
 } 
