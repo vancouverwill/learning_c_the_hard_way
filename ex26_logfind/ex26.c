@@ -123,6 +123,10 @@ int main(int argc, char *argv[])
 	int searchAll = 1;
 	debug("main begin:%s", argv[1]);
 
+	if (argc == 1) {
+		die("you must pass in a search param e.g. 'ex26 php'");
+	}
+
 	if (strncmp(argv[1],"-o", 2) == 0) {
 		debug("setting up OR");
 		searchAll = 0;
