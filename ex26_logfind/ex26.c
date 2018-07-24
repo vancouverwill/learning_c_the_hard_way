@@ -44,41 +44,40 @@ char* get_colored_search_word(char* needle)
 	char* singleSearchWordWithWarning;
 	asprintf(&singleSearchWordWithWarning, "%s%s%s", RED, needle, NC);
 	return singleSearchWordWithWarning;
-}	
+}
 
-int main(int argc, char *argv[])
+/**
+ * Remove trailing white space characters from string
+ */
+void trimTrailing(char * str)
 {
-	int indexStartingSearchWord = 1;
-	int searchAll = 1;
-	debug("main begin:%s", argv[1]);
+    int index, i;
 
-	if (strncmp(argv[1],"-o", 2) == 0) {
-		debug("setting up OR");
-		searchAll = 0;
-		printf("search OR\n");
-		indexStartingSearchWord = 2;
-	} else {
-		debug("setting up ALL");
-		printf("search ALL\n");
-	} 
-	debug("have set search type");
+    /* Set default index */
+    index = -1;
 
-	char* logFileName = "./.logfind";
-    FILE* logFile = NULL;
-    logFile = fopen(logFileName, "r+");
-    if (logFile == NULL) die("Failed to load log directory file.");
-	char fileName [ MAX_LINE_SIZE ]; 
-	while ( fgets ( fileName, sizeof fileName, logFile ) != NULL ) {
-		printf("fileName:%s", fileName);
-	}
+    /* Find last index of non-white space character */
+    i = 0;
+    while(str[i] != '\0')
+    {
+        if(str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+        {
+            index= i;
+        }
 
-	char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";
+        i++;
+    }
 
-	for (int i = indexStartingSearchWord; i < argc; i++) {
-		printf("%d:%s\n", i, argv[i]);
-	}
+    /* Mark next character to last non-white space character as NULL */
+    str[index + 1] = '\0';
+}
+
+void search(char* singleFileName, int indexStartingSearchWord, int argc, char *argv[], int searchAll)
+{
     FILE* file = NULL;
     file = fopen(singleFileName, "r+");
+	trimTrailing(singleFileName);
+	printf("open:%s!\n",singleFileName);
     if (file == NULL) die("Failed to load file.");
 	char line [ MAX_LINE_SIZE ];
 	int lines = 0;
@@ -115,4 +114,40 @@ int main(int argc, char *argv[])
 	printf("total lines:%s%d%s\n", RED, lines, NC);
 	printf("total matches:%d\n", matches);
     fclose(file);
+
+}
+
+int main(int argc, char *argv[])
+{
+	int indexStartingSearchWord = 1;
+	int searchAll = 1;
+	debug("main begin:%s", argv[1]);
+
+	if (strncmp(argv[1],"-o", 2) == 0) {
+		debug("setting up OR");
+		searchAll = 0;
+		printf("search OR\n");
+		indexStartingSearchWord = 2;
+	} else {
+		debug("setting up ALL");
+		printf("search ALL\n");
+	} 
+	debug("have set search type");
+
+	char* logFileName = "./.logfind";
+    FILE* logFile = NULL;
+    logFile = fopen(logFileName, "r+");
+    if (logFile == NULL) die("Failed to load log directory file.");
+	char fileName [ MAX_LINE_SIZE ]; 
+	while ( fgets ( fileName, sizeof fileName, logFile ) != NULL ) {
+		printf("fileName:%s", fileName);
+		search(fileName, indexStartingSearchWord, argc, argv, searchAll);
+	}
+
+	/*char* singleFileName = "/development//homestead/storage/logs/laravel-2015-03-22.log";*/
+
+	for (int i = indexStartingSearchWord; i < argc; i++) {
+		printf("%d:%s\n", i, argv[i]);
+	}
+	//search(singleFileName, indexStartingSearchWord, argc, argv, searchAll);
 }
