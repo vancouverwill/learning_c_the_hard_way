@@ -7,7 +7,9 @@
 # Unignore all dirs
 !*/
 
-# !Makefile
+!Makefile
+!*.md
+!LICENSE
 
 # Object files
 *.o
