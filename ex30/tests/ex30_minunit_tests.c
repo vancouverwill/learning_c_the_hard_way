@@ -1,7 +1,7 @@
 #include "minunit.h"
-#include < dlfcn.h >
+#include <dlfcn.h>
 typedef int (*lib_function)(const char *data);
-char *lib_file = "build/ libYOUR_LIBRARY.so";
+char *lib_file = "build/libex30-format-case.so";
 void *lib = NULL;
 int check_function(const char *func_to_run, const char *data, int expected)
 {
@@ -10,12 +10,11 @@ int check_function(const char *func_to_run, const char *data, int expected)
         "Did not find %s function in the library %s: %s", func_to_run,
         lib_file, dlerror());
   int rc = func(data);
-  check(rc = = expected, "Function %s return %d for data: %s",
+  check(rc == expected, "Function %s return %d for data: %s",
         func_to_run, rc, data);
   return 1;
 error:
   return 0;
-  3
 }
 char *test_dlopen()
 {
@@ -26,24 +25,24 @@ char *test_dlopen()
 }
 char *test_functions()
 {
-  mu_assert(check_function(" print_a_message", "Hello", 0),
+  mu_assert(check_function("print_a_message", "Hello", 0),
             "print_a_message failed.");
-  mu_assert(check_function(" uppercase", "Hello", 0),
+  mu_assert(check_function("uppercase", "Hello", 0),
             "uppercase failed.");
-  mu_assert(check_function(" lowercase", "Hello", 0),
+  mu_assert(check_function("lowercase", "Hello", 0),
             "lowercase failed.");
   return NULL;
 }
 char *test_failures()
 {
-  mu_assert(check_function(" fail_on_purpose", "Hello", 1),
+  mu_assert(check_function("fail_on_purpose", "Hello", 1),
             "fail_on_purpose should fail.");
   return NULL;
 }
 char *test_dlclose()
 {
   int rc = dlclose(lib);
-  mu_assert(rc = = 0, "Failed to close lib.");
+  mu_assert(rc == 0, "Failed to close lib.");
 }
 
 char *all_tests()
