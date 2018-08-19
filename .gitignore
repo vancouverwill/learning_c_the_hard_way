@@ -7,9 +7,13 @@
 # Unignore all dirs
 !*/
 
+# !Makefile
 !Makefile
 !*.md
 !LICENSE
+
+# log files
+*.log
 
 # Object files
 *.o
@@ -46,3 +50,5 @@
 
 *.swp
 *.swo
+
+*.log
