@@ -112,6 +112,7 @@ char *refill()
 
 char *test_destroy_on_non_empty()
 {
+	// @todo find out why this is giving a memory error
 	/*List_clear_destroy(list2);*/
 	/*mu_assert(List_count(list) == 0, "Wrong count after destroy.");*/
 
