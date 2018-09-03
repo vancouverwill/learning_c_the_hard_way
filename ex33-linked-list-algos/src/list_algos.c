@@ -31,6 +31,36 @@ int List_bubble_sort(List * list, List_compare cmp)
     return 0;
 }
 
+int List_bubble_sort_optimized(List * list, List_compare cmp)
+{
+    int sorted = 1;
+
+    if (List_count(list) <= 1) {
+        return 0;		// already sorted
+    }
+
+	int n = 0; 	
+    do {
+        sorted = 1;
+		int i = 0; 
+        LIST_FOREACH(list, first, next, cur) {
+            if (cur->next) {
+				if (n != 0 && i >= n - 1) {
+					continue;
+				}
+                if (cmp(cur->value, cur->next->value) > 0) {
+                    ListNode_swap(cur, cur->next);
+                    sorted = 0;
+                }
+				i++;
+            }
+        }
+		n = i;
+    } while (!sorted);
+
+    return 0;
+}
+
 inline List *List_merge(List * left, List * right, List_compare cmp)
 {
     List *result = List_create();
@@ -65,6 +95,7 @@ List *List_merge_sort(List * list, List_compare cmp)
         return list;
     }
 
+	// @todo use split here
     List *left = List_create();
     List *right = List_create();
     int middle = List_count(list) / 2;
