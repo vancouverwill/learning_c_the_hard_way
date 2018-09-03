@@ -2,6 +2,7 @@
 #include <list_algos.h>
 #include <assert.h>
 #include <string.h>
+#include <time.h>
 
 char *values[] = { "XXXX", "1234", "abcd", "xjvef", "NDSS" };
 
@@ -107,6 +108,39 @@ char *test_merge_sort()
     return NULL;
 }
 
+#define TEST_SPEED_ITERATIONS 900000
+
+time_t time_bubble() 
+{
+	time_t begin = get_micro_time();
+	for (int i = 0; i < TEST_SPEED_ITERATIONS; i++) {
+		test_bubble_sort();
+	}
+	time_t end = get_micro_time();
+	long diff = end - begin;
+	printf("elapsed%ld\n", diff);		
+	return diff;
+}
+
+time_t time_bubble_op() 
+{
+	time_t begin = get_micro_time();
+	for (int i = 0; i < TEST_SPEED_ITERATIONS; i++) {
+		test_bubble_sort_optimized();
+	}
+	time_t end = get_micro_time();
+	long diff = end - begin;
+	printf("elapsed%ld\n", diff);		
+	return diff;
+}
+
+char *test_time()
+{
+	mu_assert(time_bubble() > time_bubble_op(),	"time bubble should take longer than time bubble optimized");
+	return NULL;
+}
+
+
 char *all_tests()
 {
     mu_suite_start();
@@ -114,6 +148,7 @@ char *all_tests()
     mu_run_test(test_bubble_sort);
     mu_run_test(test_bubble_sort_optimized);
     mu_run_test(test_merge_sort);
+    mu_run_test(test_time);
 
     return NULL;
 }
