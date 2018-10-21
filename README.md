@@ -3,6 +3,8 @@ Exercises for the amazing http://c.learncodethehardway.org/book/
 
 Original code at `https://github.com/zedshaw/learn-c-the-hard-way-lectures`
 
+Code from book https://github.com/zedshaw/liblcthw
+
 ## Basics
 
 To run a compiled c  binary you just need the path so 
